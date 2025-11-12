@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>単語シャッフル</title>
+    <title>ゆえりあ構文ジェネレーター</title>
     <style>
         body {
             font-family: sans-serif;
@@ -15,8 +15,8 @@
             background-color: #f0f0f0;
         }
         #word-container {
-            font-size: 2.5em;
-            text-align: center;
+            font-size: 2em; 
+            text-align: left;
             padding: 20px;
             border: 2px solid #ccc;
             border-radius: 10px;
@@ -24,11 +24,25 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             width: 80%;
             max-width: 900px;
+            height: 80vh;
+            overflow-y: auto;
+            line-height: 1.6;
         }
         #word-container span {
             display: inline-block;
-            margin: 0 0.2em;
-            transition: transform 0.2s ease-in-out;
+            margin: 0 0.1em;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -36,34 +50,36 @@
 
 <div id="word-container">
     <span>前に</span>
-    <span>友達の</span>
-    <span>声が</span>
-    <span>学校の</span>
-    <span>中で</span>
-    <span>大きい</span>
-    <span>音</span>
-    <span>出て</span>
-    <span>ビビった</span>
-    <span>ことがある</span>
 </div>
 
 <script>
+
+    const sourceWords = [
+        "前に", "友達の", "声が", "学校の", "中で", 
+        "大きい", "音", "出て", "ビビった", "ことがある"
+    ];
+
     const wordContainer = document.getElementById('word-container');
-    const words = wordContainer.children;
-    const wordCount = words.length;
 
     setInterval(() => {
-        const wordToMoveIndex = Math.floor(Math.random() * wordCount);
-        const wordToMove = words[wordToMoveIndex];
+        const lastWordElement = wordContainer.lastElementChild;
+        if (!lastWordElement) return;
+        const lastWordText = lastWordElement.textContent;
 
-        const destinationIndex = Math.floor(Math.random() * wordCount);
-        const destinationWord = words[destinationIndex];
+        let nextWordText;
+        do {
+            const randomIndex = Math.floor(Math.random() * sourceWords.length);
+            nextWordText = sourceWords[randomIndex];
+        } while (nextWordText === lastWordText); 
 
-        if (wordToMove && destinationWord) {
-             destinationWord.insertAdjacentElement('afterend', wordToMove);
-        }
+        const newWordElement = document.createElement('span');
+        newWordElement.textContent = nextWordText;
 
-    }, 50);
+        wordContainer.appendChild(newWordElement);
+        
+        wordContainer.scrollTop = wordContainer.scrollHeight;
+
+    }, 100);
 </script>
 
 </body>
