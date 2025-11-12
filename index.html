@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単語シャッフル</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #word-container {
+            font-size: 2.5em;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+        #word-container span {
+            display: inline-block;
+            margin: 0 0.2em;
+            transition: transform 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+<div id="word-container">
+    <span>前に</span>
+    <span>友達の</span>
+    <span>声が</span>
+    <span>学校の</span>
+    <span>中で</span>
+    <span>大きい</span>
+    <span>音</span>
+    <span>出て</span>
+    <span>ビビった</span>
+    <span>ことがある</span>
+</div>
+
+<script>
+    const wordContainer = document.getElementById('word-container');
+    const words = wordContainer.children;
+    const wordCount = words.length;
+
+    setInterval(() => {
+        const wordToMoveIndex = Math.floor(Math.random() * wordCount);
+        const wordToMove = words[wordToMoveIndex];
+
+        const destinationIndex = Math.floor(Math.random() * wordCount);
+        const destinationWord = words[destinationIndex];
+
+        if (wordToMove && destinationWord) {
+             destinationWord.insertAdjacentElement('afterend', wordToMove);
+        }
+
+    }, 50);
+</script>
+
+</body>
+</html>
