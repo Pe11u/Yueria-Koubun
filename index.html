@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ゆえりあ構文ジェネレーター</title>
+    <link rel="icon" href="assets/logo.png" />
     <style>
         body {
             font-family: sans-serif;
@@ -15,7 +16,7 @@
             background-color: #f0f0f0;
         }
         #word-container {
-            font-size: 1.5em;
+            font-size: 1.5em; 
             text-align: left;
             padding: 20px;
             border: 2px solid #ccc;
@@ -24,9 +25,11 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             width: 90%;
             max-width: 1200px;
-            height: 90vh;
+            height: 90vh; 
             overflow-y: auto;
             line-height: 1.6;
+            /* スクロール動作をスムーズにする */
+            scroll-behavior: smooth;
         }
         #word-container span {
             display: inline-block;
@@ -62,6 +65,10 @@
     const wordContainer = document.getElementById('word-container');
 
     setInterval(() => {
+)
+        const isScrolledToBottom = 
+            wordContainer.scrollTop + wordContainer.clientHeight + 5 >= wordContainer.scrollHeight;
+
         const lastWordElement = wordContainer.lastElementChild;
         if (!lastWordElement) return;
         const lastWordText = lastWordElement.textContent;
@@ -77,7 +84,9 @@
 
         wordContainer.appendChild(newWordElement);
         
-        wordContainer.scrollTop = wordContainer.scrollHeight;
+        if (isScrolledToBottom) {
+            wordContainer.scrollTop = wordContainer.scrollHeight;
+        }
 
     }, 100);
 </script>
